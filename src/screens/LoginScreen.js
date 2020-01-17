@@ -7,10 +7,56 @@ import {
   Image,
   TouchableOpacity,
   ScrollView,
+  AsyncStorage,
 } from 'react-native';
 import {TextInput} from 'react-native-paper';
+import axios from 'axios';
+import Snackbar from 'react-native-snackbar';
 
 class LoginScreen extends Component {
+  state = {
+    email: '',
+    password: '',
+  };
+
+  onChangeText = (key, val) => {
+    this.setState({[key]: val});
+  };
+
+  Login = async () => {
+    const {email} = this.state;
+    const {password} = this.state;
+
+    const loginDetails = {
+      email: email,
+      password: password,
+    };
+
+    axios
+      .post('http://192.168.1.239/huddle_api/public/api/login', loginDetails)
+      .then(res => {
+        AsyncStorage.setItem('token', res.data.success.token);
+        AsyncStorage.setItem('first_name', res.data.success.first_name);
+        AsyncStorage.setItem('email', res.data.success.email);
+        AsyncStorage.setItem(
+          'user_id',
+          JSON.stringify(res.data.success.user_id),
+        );
+        this.props.navigation.navigate({routeName: 'Home'});
+      })
+      .catch(err =>
+        Snackbar.show({
+          title: 'Invalid credentials!!!',
+          duration: Snackbar.LENGTH_SHORT,
+          backgroundColor: '#fff',
+          color: 'red',
+          action: {
+            title: 'Close',
+            color: 'green',
+          },
+        }),
+      );
+  };
   render() {
     return (
       <View style={styles.mainContainer}>
@@ -36,6 +82,7 @@ class LoginScreen extends Component {
                   autoCorrect={false}
                   returnKeyType={'next'}
                   style={styles.emailInput}
+                  onChangeText={val => this.onChangeText('email', val)}
                   theme={{
                     colors: {
                       primary: '#FFF',
@@ -49,6 +96,7 @@ class LoginScreen extends Component {
                   autoCorrect={false}
                   secureTextEntry
                   style={styles.passwordInput}
+                  onChangeText={val => this.onChangeText('password', val)}
                   theme={{
                     colors: {
                       primary: '#fff',
@@ -66,9 +114,7 @@ class LoginScreen extends Component {
                   </TouchableOpacity>
                   <TouchableOpacity
                     style={styles.submitBtn}
-                    onPress={() =>
-                      this.props.navigation.navigate({routeName: 'Home'})
-                    }>
+                    onPress={this.Login}>
                     <Text style={styles.loginText}>Login</Text>
                   </TouchableOpacity>
                 </View>

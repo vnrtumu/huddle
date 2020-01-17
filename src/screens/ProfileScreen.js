@@ -6,17 +6,51 @@ import {
   Image,
   TouchableOpacity,
   ScrollView,
+  AsyncStorage,
 } from 'react-native';
 
 import CardOptions from '../components/CardOptions';
 import Icon from 'react-native-vector-icons/Fontisto';
 import ImagePicker from 'react-native-image-picker';
 
+import axios from 'axios';
+import Snackbar from 'react-native-snackbar';
 export default class ProfileScreen extends Component {
   state = {
     ImageSource: null,
   };
 
+  componentDidMount() {
+    AsyncStorage.getItem('token').then(token => {
+      if (token) {
+        axios
+          .get('http://192.168.1.239/huddle_api/public/api/profileDisplay', {
+            headers: {
+              Authorization: 'Bearer ' + token,
+            },
+          })
+          .then(res => {
+            this.setState({
+              email: res.data.success.email,
+              first_name: res.data.success.first_name,
+              phone: res.data.success.phone,
+            });
+          })
+          .catch(err =>
+            Snackbar.show({
+              title: 'Something Went Wrong!',
+              duration: Snackbar.LENGTH_SHORT,
+              backgroundColor: '#fff',
+              color: 'red',
+              action: {
+                title: 'Close',
+                color: 'green',
+              },
+            }),
+          );
+      }
+    });
+  }
   selectPhotoTapped() {
     const options = {
       quality: 1.0,
@@ -48,6 +82,11 @@ export default class ProfileScreen extends Component {
     });
   }
 
+  clearAsyncStorage = () => {
+    AsyncStorage.clear();
+    this.props.navigation.navigate('Login');
+  };
+
   render() {
     return (
       <ScrollView
@@ -78,31 +117,24 @@ export default class ProfileScreen extends Component {
             </View>
           </View>
           <View style={styles.nameContainer}>
-            <Text style={styles.textStyle}>{this.state.name}</Text>
+            <Text style={styles.textStyle}>{this.state.first_name}</Text>
           </View>
         </View>
         <View style={styles.settingsContainer}>
           <CardOptions
-            title="venkat.reddy@aroha.co.in"
+            title={this.state.email}
             icon="envelope"
             style={styles.cardOptions}
           />
           <CardOptions
-            title="Change Password"
-            icon="gear"
+            title={this.state.phone}
+            icon="phone"
             style={styles.cardOptions}
             onSelect={() =>
               this.props.navigation.navigate({routeName: 'Change'})
             }
           />
-          <CardOptions
-            title="FeedBack"
-            icon="feed"
-            style={styles.cardOptions}
-            onSelect={() =>
-              this.props.navigation.navigate({routeName: 'FeedBack'})
-            }
-          />
+          
           {/* <TouchableOpacity onPress={this.clearAsyncStorage}> */}
           <CardOptions
             title="Log Out"

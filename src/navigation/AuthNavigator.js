@@ -14,43 +14,43 @@ const AuthNavigator = createStackNavigator({
   Splash: {
     screen: SplashScreen,
     navigationOptions: {
-      header: null,
+      headerShown: false,
     },
   },
   Login: {
     screen: LoginScreen,
     navigationOptions: {
-      header: null,
+      headerShown: false,
     },
   },
   Register: {
     screen: RegisterScreen,
     navigationOptions: {
-      header: null,
+      headerShown: false,
     },
   },
   Forgot: {
     screen: ForgotPass,
     navigationOptions: {
-      header: null,
+      headerShown: false,
     },
   },
   Verify: {
     screen: VerifyOtp,
     navigationOptions: {
-      header: null,
+      headerShown: false,
     },
   },
   Reset: {
     screen: ResetPass,
     navigationOptions: {
-      header: null,
+      headerShown: false,
     },
   },
   Home: {
     screen: HuddleNavigator,
     navigationOptions: {
-      header: null,
+      headerShown: false,
     },
   },
 });

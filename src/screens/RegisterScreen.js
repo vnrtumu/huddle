@@ -10,7 +10,63 @@ import {
 } from 'react-native';
 import {TextInput} from 'react-native-paper';
 
+import axios from 'axios';
+import Snackbar from 'react-native-snackbar';
+
 class RegisterScreen extends Component {
+  state = {
+    first_name: '',
+    email: '',
+    phone: '',
+    password: '',
+  };
+
+  onChangeText = (key, val) => {
+    this.setState({[key]: val});
+  };
+
+  RegisterHandler = async () => {
+    const {first_name} = this.state;
+    const {email} = this.state;
+    const {phone} = this.state;
+    const {password} = this.state;
+
+    const userDetails = {
+      first_name: first_name,
+      email: email,
+      phone: phone,
+      password: password,
+      confirm_password: password,
+    };
+
+    axios
+      .post('http://192.168.1.239/huddle_api/public/api/register', userDetails)
+      .then(res =>
+        Snackbar.show({
+          title: 'Please Wait for admin confirmation.',
+          duration: Snackbar.LENGTH_SHORT,
+          backgroundColor: '#fff',
+          color: 'green',
+          action: {
+            title: 'Close',
+            color: 'green',
+          },
+        }),
+      )
+      .catch(err =>
+        Snackbar.show({
+          title: 'Please enter Valid details.',
+          duration: Snackbar.LENGTH_SHORT,
+          backgroundColor: '#fff',
+          color: 'red',
+          action: {
+            title: 'Close',
+            color: 'green',
+          },
+        }),
+      );
+  };
+
   render() {
     return (
       <View style={styles.mainContainer}>
@@ -41,6 +97,7 @@ class RegisterScreen extends Component {
                       underlineColor: 'transparent',
                     },
                   }}
+                  onChangeText={val => this.onChangeText('first_name', val)}
                 />
                 <TextInput
                   label="Enter Your Email Address"
@@ -54,6 +111,7 @@ class RegisterScreen extends Component {
                       underlineColor: 'transparent',
                     },
                   }}
+                  onChangeText={val => this.onChangeText('email', val)}
                 />
                 <TextInput
                   label="Enter Your Mobile Number"
@@ -67,6 +125,7 @@ class RegisterScreen extends Component {
                       underlineColor: 'transparent',
                     },
                   }}
+                  onChangeText={val => this.onChangeText('phone', val)}
                 />
                 <TextInput
                   label="Enter Your Password"
@@ -80,20 +139,12 @@ class RegisterScreen extends Component {
                       underlineColor: 'transparent',
                     },
                   }}
+                  onChangeText={val => this.onChangeText('password', val)}
                 />
                 <View style={styles.btnContiners}>
                   <TouchableOpacity
-                    style={styles.forgotPass}
-                    onPress={() =>
-                      this.props.navigation.navigate({routeName: 'Forgot'})
-                    }>
-                    <Text style={styles.forgotPassText}>Forgot Password?</Text>
-                  </TouchableOpacity>
-                  <TouchableOpacity
                     style={styles.submitBtn}
-                    onPress={() =>
-                      this.props.navigation.navigate({routeName: 'Home'})
-                    }>
+                    onPress={this.RegisterHandler}>
                     <Text style={styles.loginText}>Register</Text>
                   </TouchableOpacity>
                 </View>
@@ -159,16 +210,16 @@ const styles = StyleSheet.create({
     paddingVertical: 10,
   },
   emailInput: {
-    marginVertical: 10,
+    marginVertical: 8,
     backgroundColor: 'transparent',
   },
   passwordInput: {
-    marginVertical: 10,
+    marginVertical: 8,
     backgroundColor: 'transparent',
   },
   btnContiners: {
     flexDirection: 'row',
-    justifyContent: 'space-between',
+    justifyContent: 'flex-end',
   },
   submitBtn: {
     borderRadius: 10,

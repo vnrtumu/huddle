@@ -4,22 +4,18 @@ import ImageLoader from '../components/ImageLoader';
 
 export default class SplashScreen extends Component {
   componentDidMount() {
-    setTimeout(() => {
-      this.props.navigation.navigate('Login');
-    }, 2000);
+    AsyncStorage.getItem('token').then(token => {
+      if (token) {
+        setTimeout(() => {
+          this.props.navigation.navigate('Home');
+        }, 2000);
+      } else {
+        setTimeout(() => {
+          this.props.navigation.navigate('Login');
+        }, 2000);
+      }
+    });
   }
-  //   AsyncStorage.getItem('token').then(token => {
-  //     if (token) {
-  //       setTimeout(() => {
-  //         this.props.navigation.navigate('Home');
-  //       }, 2000);
-  //     } else {
-  //       setTimeout(() => {
-  //         this.props.navigation.navigate('AppIntro');
-  //       }, 2000);
-  //     }
-  //   });
-  // }
   render() {
     return (
       <View style={styles.container}>
