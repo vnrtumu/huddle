@@ -239,12 +239,13 @@ class EditTaskScreen extends Component {
             <Text style={styles.headingTitle}>Edit This Task</Text>
           </View>
           <View style={styles.inputContainer}>
-            <Text style={styles.headingTitleTask}>
+            {/* <Text style={styles.headingTitleTask}>
               Task Number is: #{this.state.taskId}
-            </Text>
+            </Text> */}
             <TextInput
               value={this.state.projectName}
               autoCapitalize="none"
+              disabled={true}
               autoCorrect={false}
               returnKeyType={'next'}
               style={styles.emailInput}
@@ -258,6 +259,7 @@ class EditTaskScreen extends Component {
             <TextInput
               value={this.state.description}
               autoCapitalize="none"
+              disabled={true}
               autoCorrect={false}
               returnKeyType={'next'}
               style={styles.emailInput}

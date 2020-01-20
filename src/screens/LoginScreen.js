@@ -1,3 +1,4 @@
+/* eslint-disable handle-callback-err */
 import React, {Component} from 'react';
 import {
   View,
@@ -34,7 +35,7 @@ class LoginScreen extends Component {
     };
 
     axios
-      .post(`${config.API_URL}/login`, loginDetails)
+      .post('http://dev.api.huddle.aroha.co.in/api/login', loginDetails)
       .then(res => {
         AsyncStorage.setItem('token', res.data.success.token);
         AsyncStorage.setItem('first_name', res.data.success.first_name);
