@@ -3,6 +3,7 @@ import {View, ScrollView, StyleSheet, AsyncStorage} from 'react-native';
 import Task from '../components/Task';
 import axios from 'axios';
 import Snackbar from 'react-native-snackbar';
+import config from '../../config';
 
 class OnHoldTaskScreen extends Component {
   constructor(props) {
@@ -19,7 +20,7 @@ class OnHoldTaskScreen extends Component {
     AsyncStorage.getItem('token').then(token => {
       if (token) {
         axios
-          .post('http://192.168.1.239/huddle_api/public/api/onHold', user_id, {
+          .post(`${config.API_URL}/onHold`, user_id, {
             headers: {
               Authorization: 'Bearer ' + token,
             },
@@ -53,60 +54,24 @@ class OnHoldTaskScreen extends Component {
           {dataSource.map((data, i) => (
             <Task
               key={i}
+              icon="edit"
               title={data.project_name}
               pointer={data.description}
               style={styles.chapterCardtext}
               colorCode="#9932CC"
+              onEdit={() => {
+                this.props.navigation.navigate({
+                  routeName: 'EditTask',
+                  params: {
+                    projectName: `${data.project_name}`,
+                    description: `${data.description}`,
+                    taskId: `${data.task_id}`,
+                    statusId: `${data.status_id}`,
+                  },
+                });
+              }}
             />
           ))}
-          {/* <Task
-            title="Alberta"
-            pointer="Lorem Ipsum has been the industry's standard dummy text ever since the 1500s."
-            style={styles.chapterCardtext}
-            colorCode="#9932CC"
-          />
-          <Task
-            title="Ilearn online"
-            pointer="Lorem Ipsum has been the industry's standard dummy text ever since the 1500s."
-            style={styles.chapterCardtext}
-            colorCode="#9932CC"
-          />
-          <Task
-            title="Capability"
-            pointer="Lorem Ipsum has been the industry's standard dummy text ever since the 1500s."
-            style={styles.chapterCardtext}
-            colorCode="#9932CC"
-          />
-          <Task
-            title="Huddle Meeting Mobile"
-            pointer="Lorem Ipsum has been the industry's standard dummy text ever since the 1500s."
-            style={styles.chapterCardtext}
-            colorCode="#9932CC"
-          />
-          <Task
-            title="Huddle Meeting Web"
-            pointer="Lorem Ipsum has been the industry's standard dummy text ever since the 1500s."
-            style={styles.chapterCardtext}
-            colorCode="#9932CC"
-          />
-          <Task
-            title="Capability"
-            pointer="Lorem Ipsum has been the industry's standard dummy text ever since the 1500s."
-            style={styles.chapterCardtext}
-            colorCode="#9932CC"
-          />
-          <Task
-            title="Huddle Meeting Mobile"
-            pointer="Lorem Ipsum has been the industry's standard dummy text ever since the 1500s."
-            style={styles.chapterCardtext}
-            colorCode="#9932CC"
-          />
-          <Task
-            title="Huddle Meeting Web"
-            pointer="Lorem Ipsum has been the industry's standard dummy text ever since the 1500s."
-            style={styles.chapterCardtext}
-            colorCode="#9932CC"
-          /> */}
         </View>
       </ScrollView>
     );

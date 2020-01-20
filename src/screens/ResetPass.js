@@ -7,6 +7,7 @@ import {
   ScrollView,
 } from 'react-native';
 import {TextInput} from 'react-native-paper';
+import config from '../../config';
 
 class ResetPass extends Component {
   render() {

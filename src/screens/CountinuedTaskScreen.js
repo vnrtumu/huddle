@@ -3,6 +3,7 @@ import {View, ScrollView, StyleSheet, AsyncStorage} from 'react-native';
 import Task from '../components/Task';
 import axios from 'axios';
 import Snackbar from 'react-native-snackbar';
+import config from '../../config';
 
 class CountinuedTaskScreen extends Component {
   constructor(props) {
@@ -19,15 +20,11 @@ class CountinuedTaskScreen extends Component {
     AsyncStorage.getItem('token').then(token => {
       if (token) {
         axios
-          .post(
-            'http://192.168.1.239/huddle_api/public/api/continuedTasks',
-            user_id,
-            {
-              headers: {
-                Authorization: 'Bearer ' + token,
-              },
+          .post(`${config.API_URL}/continuedTasks`, user_id, {
+            headers: {
+              Authorization: 'Bearer ' + token,
             },
-          )
+          })
           .then(res => {
             this.setState({
               dataSource: [...res.data.success],
@@ -59,10 +56,17 @@ class CountinuedTaskScreen extends Component {
               title={data.project_name}
               pointer={data.description}
               style={styles.chapterCardtext}
+              icon="edit"
               colorCode="#0000FF"
               onEdit={() => {
                 this.props.navigation.navigate({
                   routeName: 'EditTask',
+                  params: {
+                    projectName: `${data.project_name}`,
+                    description: `${data.description}`,
+                    taskId: `${data.task_id}`,
+                    statusId: `${data.status_id}`,
+                  },
                 });
               }}
             />

@@ -15,6 +15,8 @@ import ImagePicker from 'react-native-image-picker';
 
 import axios from 'axios';
 import Snackbar from 'react-native-snackbar';
+import config from '../../config';
+
 export default class ProfileScreen extends Component {
   state = {
     ImageSource: null,
@@ -24,7 +26,7 @@ export default class ProfileScreen extends Component {
     AsyncStorage.getItem('token').then(token => {
       if (token) {
         axios
-          .get('http://192.168.1.239/huddle_api/public/api/profileDisplay', {
+          .get(`${config.API_URL}/profileDisplay`, {
             headers: {
               Authorization: 'Bearer ' + token,
             },

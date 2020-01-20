@@ -4,6 +4,7 @@ import Task from '../components/Task';
 
 import axios from 'axios';
 import Snackbar from 'react-native-snackbar';
+import config from '../../config';
 
 class CompletedTaskScreen extends Component {
   constructor(props) {
@@ -20,15 +21,11 @@ class CompletedTaskScreen extends Component {
     AsyncStorage.getItem('token').then(token => {
       if (token) {
         axios
-          .post(
-            'http://192.168.1.239/huddle_api/public/api/completedTasks',
-            user_id,
-            {
-              headers: {
-                Authorization: 'Bearer ' + token,
-              },
+          .post(`${config.API_URL}/completedTasks`, user_id, {
+            headers: {
+              Authorization: 'Bearer ' + token,
             },
-          )
+          })
           .then(res => {
             // console.log(res.data.success);
             this.setState({

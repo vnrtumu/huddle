@@ -11,7 +11,7 @@ const Task = props => {
         </Text>
         <TouchableOpacity onPress={props.onEdit}>
           <FontAwesome
-            name="edit"
+            name={props.icon}
             size={30}
             color="#C223CE"
             style={styles.iconStyle}

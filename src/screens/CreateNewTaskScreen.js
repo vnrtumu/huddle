@@ -11,6 +11,7 @@ import {TextInput} from 'react-native-paper';
 import {Dropdown} from 'react-native-material-dropdown';
 import axios from 'axios';
 import Snackbar from 'react-native-snackbar';
+import config from '../../config';
 
 class CreateNewTaskScreen extends Component {
   constructor(props) {
@@ -35,15 +36,11 @@ class CreateNewTaskScreen extends Component {
             user_id: user_id,
           };
           axios
-            .post(
-              'http://192.168.1.239/huddle_api/public/api/projectsDepartments',
-              userId,
-              {
-                headers: {
-                  Authorization: 'Bearer ' + token,
-                },
+            .post(`${config.API_URL}/projectsDepartments`, userId, {
+              headers: {
+                Authorization: 'Bearer ' + token,
               },
-            )
+            })
             .then(res => {
               this.setState({
                 dataSource: [...res.data.success],
@@ -82,15 +79,11 @@ class CreateNewTaskScreen extends Component {
           },
         ];
         axios
-          .post(
-            'http://192.168.1.239/huddle_api/public/api/createNewTask',
-            taskDetails,
-            {
-              headers: {
-                Authorization: 'Bearer ' + token,
-              },
+          .post(`${config.API_URL}/createNewTask`, taskDetails, {
+            headers: {
+              Authorization: 'Bearer ' + token,
             },
-          )
+          })
           .then(res => {
             this.props.navigation.navigate({
               routeName: 'NewTask',
@@ -115,7 +108,6 @@ class CreateNewTaskScreen extends Component {
       }
     });
 
-    // console.log(taskDetails);
   };
   render() {
     const {dataSource} = this.state;

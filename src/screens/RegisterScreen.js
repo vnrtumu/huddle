@@ -12,6 +12,7 @@ import {TextInput} from 'react-native-paper';
 
 import axios from 'axios';
 import Snackbar from 'react-native-snackbar';
+import config from '../../config';
 
 class RegisterScreen extends Component {
   state = {
@@ -40,7 +41,7 @@ class RegisterScreen extends Component {
     };
 
     axios
-      .post('http://192.168.1.239/huddle_api/public/api/register', userDetails)
+      .post(`${config.API_URL}/register`, userDetails)
       .then(res =>
         Snackbar.show({
           title: 'Please Wait for admin confirmation.',
