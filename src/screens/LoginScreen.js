@@ -35,7 +35,7 @@ class LoginScreen extends Component {
     };
 
     axios
-      .post('http://dev.api.huddle.aroha.co.in/api/login', loginDetails)
+      .post(`${config.API_URL}/login`, loginDetails)
       .then(res => {
         AsyncStorage.setItem('token', res.data.success.token);
         AsyncStorage.setItem('first_name', res.data.success.first_name);
