@@ -1,9 +1,12 @@
+/* eslint-disable handle-callback-err */
 import React, {Component} from 'react';
-import {View, ScrollView, StyleSheet, AsyncStorage} from 'react-native';
+import {View, ScrollView, StyleSheet, AsyncStorage, Image} from 'react-native';
 import Task from '../components/Task';
 import axios from 'axios';
-import Snackbar from 'react-native-snackbar';
+// import Snackbar from 'react-native-snackbar';
 import config from '../../config';
+import {WToast} from 'react-native-smart-tip';
+
 
 class CountinuedTaskScreen extends Component {
   constructor(props) {
@@ -30,18 +33,22 @@ class CountinuedTaskScreen extends Component {
               dataSource: [...res.data.success],
             });
           })
-          .catch(err =>
-            Snackbar.show({
-              title: 'Something Went Wrong!',
-              duration: Snackbar.LENGTH_SHORT,
-              backgroundColor: '#fff',
-              color: 'red',
-              action: {
-                title: 'Close',
-                color: 'green',
-              },
-            }),
-          );
+          .catch(err => {
+            const toastOpts = {
+              data: 'Success',
+              textColor: '#ffffff',
+              backgroundColor: '#444444',
+              duration: WToast.duration.LONG, //1.SHORT 2.LONG
+              position: WToast.position.TOP, // 1.TOP 2.CENTER 3.BOTTOM
+              icon: (
+                <Image
+                  source={require('../assets/logo.png')}
+                  style={{width: 32, height: 32, resizeMode: 'contain'}}
+                />
+              ),
+            };
+            WToast.show(toastOpts);
+          });
       }
     });
   }

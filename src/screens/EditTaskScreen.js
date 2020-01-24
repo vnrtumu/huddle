@@ -6,13 +6,15 @@ import {
   StyleSheet,
   TouchableOpacity,
   ScrollView,
+  Image,
   AsyncStorage,
 } from 'react-native';
 import {TextInput} from 'react-native-paper';
 import {Dropdown} from 'react-native-material-dropdown';
 import config from '../../config';
 import axios from 'axios';
-import Snackbar from 'react-native-snackbar';
+// import Snackbar from 'react-native-snackbar';
+import {WToast} from 'react-native-smart-tip';
 
 class EditTaskScreen extends Component {
   constructor(props) {
@@ -51,18 +53,22 @@ class EditTaskScreen extends Component {
                   status: 'New Task',
                 });
               })
-              .catch(err =>
-                Snackbar.show({
-                  title: 'Something Went Wrong!',
-                  duration: Snackbar.LENGTH_SHORT,
-                  backgroundColor: '#fff',
-                  color: 'red',
-                  action: {
-                    title: 'Close',
-                    color: 'green',
-                  },
-                }),
-              );
+              .catch(err => {
+                const toastOpts = {
+                  data: 'Success',
+                  textColor: '#ffffff',
+                  backgroundColor: '#444444',
+                  duration: WToast.duration.LONG, //1.SHORT 2.LONG
+                  position: WToast.position.TOP, // 1.TOP 2.CENTER 3.BOTTOM
+                  icon: (
+                    <Image
+                      source={require('../assets/logo.png')}
+                      style={{width: 32, height: 32, resizeMode: 'contain'}}
+                    />
+                  ),
+                };
+                WToast.show(toastOpts);
+              });
             break;
 
           case '2':
@@ -81,18 +87,22 @@ class EditTaskScreen extends Component {
                   status: 'Countinued Task',
                 });
               })
-              .catch(err =>
-                Snackbar.show({
-                  title: 'Something Went Wrong!',
-                  duration: Snackbar.LENGTH_SHORT,
-                  backgroundColor: '#fff',
-                  color: 'red',
-                  action: {
-                    title: 'Close',
-                    color: 'green',
-                  },
-                }),
-              );
+              .catch(err => {
+                const toastOpts = {
+                  data: 'Success',
+                  textColor: '#ffffff',
+                  backgroundColor: '#444444',
+                  duration: WToast.duration.LONG, //1.SHORT 2.LONG
+                  position: WToast.position.TOP, // 1.TOP 2.CENTER 3.BOTTOM
+                  icon: (
+                    <Image
+                      source={require('../assets/logo.png')}
+                      style={{width: 32, height: 32, resizeMode: 'contain'}}
+                    />
+                  ),
+                };
+                WToast.show(toastOpts);
+              });
             break;
 
           case '3':
@@ -111,18 +121,22 @@ class EditTaskScreen extends Component {
                   status: 'Pendig Task',
                 });
               })
-              .catch(err =>
-                Snackbar.show({
-                  title: 'Something Went Wrong!',
-                  duration: Snackbar.LENGTH_SHORT,
-                  backgroundColor: '#fff',
-                  color: 'red',
-                  action: {
-                    title: 'Close',
-                    color: 'green',
-                  },
-                }),
-              );
+              .catch(err => {
+                const toastOpts = {
+                  data: 'Success',
+                  textColor: '#ffffff',
+                  backgroundColor: '#444444',
+                  duration: WToast.duration.LONG, //1.SHORT 2.LONG
+                  position: WToast.position.TOP, // 1.TOP 2.CENTER 3.BOTTOM
+                  icon: (
+                    <Image
+                      source={require('../assets/logo.png')}
+                      style={{width: 32, height: 32, resizeMode: 'contain'}}
+                    />
+                  ),
+                };
+                WToast.show(toastOpts);
+              });
             break;
 
           case '4':
@@ -141,18 +155,22 @@ class EditTaskScreen extends Component {
                   status: 'On Hold Task',
                 });
               })
-              .catch(err =>
-                Snackbar.show({
-                  title: 'Something Went Wrong!',
-                  duration: Snackbar.LENGTH_SHORT,
-                  backgroundColor: '#fff',
-                  color: 'red',
-                  action: {
-                    title: 'Close',
-                    color: 'green',
-                  },
-                }),
-              );
+              .catch(err => {
+                const toastOpts = {
+                  data: 'Success',
+                  textColor: '#ffffff',
+                  backgroundColor: '#444444',
+                  duration: WToast.duration.LONG, //1.SHORT 2.LONG
+                  position: WToast.position.TOP, // 1.TOP 2.CENTER 3.BOTTOM
+                  icon: (
+                    <Image
+                      source={require('../assets/logo.png')}
+                      style={{width: 32, height: 32, resizeMode: 'contain'}}
+                    />
+                  ),
+                };
+                WToast.show(toastOpts);
+              });
             break;
 
           default:
@@ -170,18 +188,22 @@ class EditTaskScreen extends Component {
                   taskId: current_task_id,
                 });
               })
-              .catch(err =>
-                Snackbar.show({
-                  title: 'Something Went Wrong!',
-                  duration: Snackbar.LENGTH_SHORT,
-                  backgroundColor: '#fff',
-                  color: 'red',
-                  action: {
-                    title: 'Close',
-                    color: 'green',
-                  },
-                }),
-              );
+              .catch(err => {
+                const toastOpts = {
+                  data: 'Success',
+                  textColor: '#ffffff',
+                  backgroundColor: '#444444',
+                  duration: WToast.duration.LONG, //1.SHORT 2.LONG
+                  position: WToast.position.TOP, // 1.TOP 2.CENTER 3.BOTTOM
+                  icon: (
+                    <Image
+                      source={require('../assets/logo.png')}
+                      style={{width: 32, height: 32, resizeMode: 'contain'}}
+                    />
+                  ),
+                };
+                WToast.show(toastOpts);
+              });
         }
       }
     });
@@ -203,30 +225,38 @@ class EditTaskScreen extends Component {
             },
           })
           .then(res => {
-            Snackbar.show({
-              title: 'updated successfully',
-              duration: Snackbar.LENGTH_SHORT,
-              backgroundColor: '#fff',
-              color: 'green',
-              action: {
-                title: 'Close',
-                color: 'green',
-              },
-            });
+            const toastOpts = {
+              data: 'Success',
+              textColor: '#ffffff',
+              backgroundColor: '#444444',
+              duration: WToast.duration.LONG, //1.SHORT 2.LONG
+              position: WToast.position.TOP, // 1.TOP 2.CENTER 3.BOTTOM
+              icon: (
+                <Image
+                  source={require('../assets/logo.png')}
+                  style={{width: 32, height: 32, resizeMode: 'contain'}}
+                />
+              ),
+            };
+            WToast.show(toastOpts);
             this.props.navigation.navigate({routeName: 'AllTasks'});
           })
-          .catch(err =>
-            Snackbar.show({
-              title: 'Invalid credentials!!!',
-              duration: Snackbar.LENGTH_SHORT,
-              backgroundColor: '#fff',
-              color: 'red',
-              action: {
-                title: 'Close',
-                color: 'green',
-              },
-            }),
-          );
+          .catch(err => {
+            const toastOpts = {
+              data: 'Success',
+              textColor: '#ffffff',
+              backgroundColor: '#444444',
+              duration: WToast.duration.LONG, //1.SHORT 2.LONG
+              position: WToast.position.TOP, // 1.TOP 2.CENTER 3.BOTTOM
+              icon: (
+                <Image
+                  source={require('../assets/logo.png')}
+                  style={{width: 32, height: 32, resizeMode: 'contain'}}
+                />
+              ),
+            };
+            WToast.show(toastOpts);
+          });
       }
     });
   };

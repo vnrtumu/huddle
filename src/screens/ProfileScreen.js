@@ -1,3 +1,4 @@
+/* eslint-disable handle-callback-err */
 import React, {Component} from 'react';
 import {
   View,
@@ -14,7 +15,9 @@ import Icon from 'react-native-vector-icons/Fontisto';
 import ImagePicker from 'react-native-image-picker';
 
 import axios from 'axios';
-import Snackbar from 'react-native-snackbar';
+// import Snackbar from 'react-native-snackbar';
+import {WToast} from 'react-native-smart-tip';
+
 import config from '../../config';
 
 export default class ProfileScreen extends Component {
@@ -38,18 +41,22 @@ export default class ProfileScreen extends Component {
               phone: res.data.success.phone,
             });
           })
-          .catch(err =>
-            Snackbar.show({
-              title: 'Something Went Wrong!',
-              duration: Snackbar.LENGTH_SHORT,
-              backgroundColor: '#fff',
-              color: 'red',
-              action: {
-                title: 'Close',
-                color: 'green',
-              },
-            }),
-          );
+          .catch(err => {
+            const toastOpts = {
+              data: 'Success',
+              textColor: '#ffffff',
+              backgroundColor: '#444444',
+              duration: WToast.duration.LONG, //1.SHORT 2.LONG
+              position: WToast.position.TOP, // 1.TOP 2.CENTER 3.BOTTOM
+              icon: (
+                <Image
+                  source={require('../assets/logo.png')}
+                  style={{width: 32, height: 32, resizeMode: 'contain'}}
+                />
+              ),
+            };
+            WToast.show(toastOpts);
+          });
       }
     });
   }
@@ -136,7 +143,7 @@ export default class ProfileScreen extends Component {
               this.props.navigation.navigate({routeName: 'Change'})
             }
           />
-          
+
           {/* <TouchableOpacity onPress={this.clearAsyncStorage}> */}
           <CardOptions
             title="Log Out"

@@ -12,8 +12,10 @@ import {
 } from 'react-native';
 import {TextInput} from 'react-native-paper';
 import axios from 'axios';
-import Snackbar from 'react-native-snackbar';
+// import Snackbar from 'react-native-snackbar';
 import config from '../../config';
+import {WToast} from 'react-native-smart-tip';
+import PasswordInputText from 'react-native-hide-show-password-input';
 
 class LoginScreen extends Component {
   state = {
@@ -46,18 +48,22 @@ class LoginScreen extends Component {
         );
         this.props.navigation.navigate({routeName: 'Home'});
       })
-      .catch(err =>
-        Snackbar.show({
-          title: 'Invalid credentials!!!',
-          duration: Snackbar.LENGTH_SHORT,
-          backgroundColor: '#fff',
-          color: 'red',
-          action: {
-            title: 'Close',
-            color: 'green',
-          },
-        }),
-      );
+      .catch(err => {
+        const toastOpts = {
+          data: 'ERROR',
+          textColor: '#ffffff',
+          backgroundColor: '#444444',
+          duration: WToast.duration.LONG, //1.SHORT 2.LONG
+          position: WToast.position.CENTER, // 1.TOP 2.CENTER 3.BOTTOM
+          icon: (
+            <Image
+              source={require('../assets/logo.png')}
+              style={{width: 32, height: 32, resizeMode: 'contain'}}
+            />
+          ),
+        };
+        WToast.show(toastOpts);
+      });
   };
   render() {
     return (
@@ -87,24 +93,19 @@ class LoginScreen extends Component {
                   onChangeText={val => this.onChangeText('email', val)}
                   theme={{
                     colors: {
-                      primary: '#FFF',
+                      text: '#FFF',
+                      primary: '#1a73e8',
                       underlineColor: 'transparent',
                     },
                   }}
                 />
-                <TextInput
+                <PasswordInputText
                   label="Enter Your Password"
                   autoCapitalize="none"
                   autoCorrect={false}
                   secureTextEntry
                   style={styles.passwordInput}
                   onChangeText={val => this.onChangeText('password', val)}
-                  theme={{
-                    colors: {
-                      primary: '#fff',
-                      underlineColor: 'transparent',
-                    },
-                  }}
                 />
                 <View style={styles.btnContiners}>
                   <TouchableOpacity
@@ -187,7 +188,8 @@ const styles = StyleSheet.create({
   },
   passwordInput: {
     marginVertical: 10,
-    backgroundColor: 'transparent',
+    color: '#fff',
+    marginTop: 5,
   },
   btnContiners: {
     flexDirection: 'row',
@@ -228,5 +230,11 @@ const styles = StyleSheet.create({
     fontSize: 22,
   },
 });
+
+// AsyncStorage.getItem('token').then(token => {
+//   if (token) {
+
+//   }
+// });
 
 export default LoginScreen;

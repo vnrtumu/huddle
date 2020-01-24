@@ -1,3 +1,4 @@
+/* eslint-disable handle-callback-err */
 import React, {Component} from 'react';
 import {
   View,
@@ -9,9 +10,10 @@ import {
   ScrollView,
 } from 'react-native';
 import {TextInput} from 'react-native-paper';
+import {WToast} from 'react-native-smart-tip';
 
 import axios from 'axios';
-import Snackbar from 'react-native-snackbar';
+// import Snackbar from 'react-native-snackbar';
 import config from '../../config';
 
 class RegisterScreen extends Component {
@@ -42,30 +44,38 @@ class RegisterScreen extends Component {
 
     axios
       .post(`${config.API_URL}/register`, userDetails)
-      .then(res =>
-        Snackbar.show({
-          title: 'Please Wait for admin confirmation.',
-          duration: Snackbar.LENGTH_SHORT,
-          backgroundColor: '#fff',
-          color: 'green',
-          action: {
-            title: 'Close',
-            color: 'green',
-          },
-        }),
-      )
-      .catch(err =>
-        Snackbar.show({
-          title: 'Please enter Valid details.',
-          duration: Snackbar.LENGTH_SHORT,
-          backgroundColor: '#fff',
-          color: 'red',
-          action: {
-            title: 'Close',
-            color: 'green',
-          },
-        }),
-      );
+      .then(res => {
+        const toastOpts = {
+          data: 'Success',
+          textColor: '#ffffff',
+          backgroundColor: '#444444',
+          duration: WToast.duration.LONG, //1.SHORT 2.LONG
+          position: WToast.position.TOP, // 1.TOP 2.CENTER 3.BOTTOM
+          icon: (
+            <Image
+              source={require('../assets/logo.png')}
+              style={{width: 32, height: 32, resizeMode: 'contain'}}
+            />
+          ),
+        };
+        WToast.show(toastOpts);
+      })
+      .catch(err => {
+        const toastOpts = {
+          data: 'Success',
+          textColor: '#ffffff',
+          backgroundColor: '#444444',
+          duration: WToast.duration.LONG, //1.SHORT 2.LONG
+          position: WToast.position.TOP, // 1.TOP 2.CENTER 3.BOTTOM
+          icon: (
+            <Image
+              source={require('../assets/logo.png')}
+              style={{width: 32, height: 32, resizeMode: 'contain'}}
+            />
+          ),
+        };
+        WToast.show(toastOpts);
+      });
   };
 
   render() {
