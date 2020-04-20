@@ -1,11 +1,11 @@
 import React from 'react';
-import {View, Text, StyleSheet, TouchableNativeFeedback} from 'react-native';
+import {View, Text, StyleSheet, TouchableOpacity} from 'react-native';
 
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 
 const CardOptions = props => {
   return (
-    <TouchableNativeFeedback onPress={props.onSelect}>
+    <TouchableOpacity onPress={props.onSelect}>
       <View style={{...styles.card, ...props.style}}>
         <FontAwesome
           name={props.icon}
@@ -15,7 +15,7 @@ const CardOptions = props => {
         />
         <Text style={styles.cardTextStyle}> {props.title} </Text>
       </View>
-    </TouchableNativeFeedback>
+    </TouchableOpacity>
   );
 };
 

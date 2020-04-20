@@ -6,6 +6,8 @@ import axios from 'axios';
 // import Snackbar from 'react-native-snackbar';
 import config from '../../config';
 import {WToast} from 'react-native-smart-tip';
+import { NavigationEvents } from "react-navigation";
+
 
 
 class CountinuedTaskScreen extends Component {
@@ -56,6 +58,7 @@ class CountinuedTaskScreen extends Component {
     const {dataSource} = this.state;
     return (
       <ScrollView>
+        <NavigationEvents onDidFocus={() => this.componentDidMount()} />
         <View style={styles.mainContainer}>
           {dataSource.map((data, i) => (
             <Task
@@ -65,14 +68,19 @@ class CountinuedTaskScreen extends Component {
               style={styles.chapterCardtext}
               icon="edit"
               colorCode="#0000FF"
+              noOfHours={data.no_of_hours}
+              comments={data.comments}
               onEdit={() => {
                 this.props.navigation.navigate({
                   routeName: 'EditTask',
                   params: {
-                    projectName: `${data.project_name}`,
-                    description: `${data.description}`,
-                    taskId: `${data.task_id}`,
-                    statusId: `${data.status_id}`,
+                      projectName: `${data.project_name}`,
+                      description: `${data.description}`,
+                      taskId: `${data.task_id}`,
+                      statusId: `${data.status_id}`,
+                      tasktypeName: `${data.type_name}`,
+                      noOfHours: `${data.no_of_hours}`,
+                      comments: `${data.comments}`,
                   },
                 });
               }}

@@ -20,6 +20,9 @@ const Task = props => {
       </View>
 
       <Text>{props.pointer}</Text>
+      <Text style={{color: 'blue', marginVertical: 5}}>No. Of Hours: {props.noOfHours}</Text>
+      <Text style={{color: 'orange', marginVertical: 5}}>Comments: {props.comments}</Text>
+
     </View>
   );
 };

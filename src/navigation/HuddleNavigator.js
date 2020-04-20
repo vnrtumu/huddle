@@ -7,9 +7,10 @@ import TaskNavigator from './TaskNavigator';
 
 import Icon from 'react-native-vector-icons/FontAwesome';
 import Fontisto from 'react-native-vector-icons/Fontisto';
+import CreateNewTaskScreen from '../screens/CreateNewTaskScreen';
 
 const tabScreenConfig = {
-  Departments: {
+  AllTasks: {
     screen: TaskNavigator,
     navigationOptions: {
       tabBarIcon: tabInfo => {
@@ -29,6 +30,16 @@ const tabScreenConfig = {
         return <Icon name="user" size={24} style={{color: '#fff'}} />;
       },
       tabBarColor: '#C223CE',
+    },
+  },
+  CreateNew: {
+    screen: CreateNewTaskScreen,
+    navigationOptions: {
+      tabBarLabel: 'CreateNew',
+      tabBarIcon: ({tintColor}) => {
+        return <Icon name="plus" size={24} style={{color: '#fff'}} />;
+      },
+      tabBarColor: 'green',
     },
   },
 };

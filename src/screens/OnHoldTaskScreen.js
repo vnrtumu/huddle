@@ -65,6 +65,8 @@ class OnHoldTaskScreen extends Component {
               pointer={data.description}
               style={styles.chapterCardtext}
               colorCode="#9932CC"
+              noOfHours={data.no_of_hours}
+              comments={data.comments}
               onEdit={() => {
                 this.props.navigation.navigate({
                   routeName: 'EditTask',
@@ -73,6 +75,9 @@ class OnHoldTaskScreen extends Component {
                     description: `${data.description}`,
                     taskId: `${data.task_id}`,
                     statusId: `${data.status_id}`,
+                    tasktypeName: `${data.type_name}`,
+                    noOfHours: `${data.no_of_hours}`,
+                    comments: `${data.comments}`,
                   },
                 });
               }}

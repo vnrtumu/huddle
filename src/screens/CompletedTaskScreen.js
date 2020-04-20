@@ -65,6 +65,8 @@ class CompletedTaskScreen extends Component {
               title={data.project_name}
               pointer={data.description}
               style={styles.chapterCardtext}
+              noOfHours={data.no_of_hours}
+              comments={data.comments}
               colorCode="#FF0000"
             />
           ))}

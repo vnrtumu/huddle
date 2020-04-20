@@ -14,19 +14,21 @@ import {Dropdown} from 'react-native-material-dropdown';
 import axios from 'axios';
 // import Snackbar from 'react-native-snackbar';
 import config from '../../config';
-import {WToast} from 'react-native-smart-tip';
+import {WToast, WSnackBar} from 'react-native-smart-tip';
 
 class CreateNewTaskScreen extends Component {
   constructor(props) {
     super(props);
     this.state = {
       dataSource: [],
+      typeSource: [],
     };
   }
   state = {
     project_department_id: '',
     description: '',
     userId: '',
+    task_type_id: '',
   };
   componentDidMount() {
     AsyncStorage.getItem('token').then(token => {
@@ -38,6 +40,32 @@ class CreateNewTaskScreen extends Component {
           const userId = {
             user_id: user_id,
           };
+          axios.get(`${config.API_URL}/TaskTypes`, {
+            headers: {
+              Authorization: 'Bearer ' + token,
+            },
+          })
+          .then(res => {
+            this.setState({
+              typeSource: [...res.data.success],
+            });
+          })
+          .catch(err => {
+            const toastOpts = {
+              data: 'Error',
+              textColor: '#ffffff',
+              backgroundColor: '#444444',
+              duration: WToast.duration.LONG, //1.SHORT 2.LONG
+              position: WToast.position.TOP, // 1.TOP 2.CENTER 3.BOTTOM
+              icon: (
+                <Image
+                  source={require('../assets/logo.png')}
+                  style={{width: 32, height: 32, resizeMode: 'contain'}}
+                />
+              ),
+            };
+            WToast.show(toastOpts);
+          });
           axios
             .post(`${config.API_URL}/projectsDepartments`, userId, {
               headers: {
@@ -75,6 +103,7 @@ class CreateNewTaskScreen extends Component {
   };
 
   CreateNewTask = async () => {
+    this.props.navigation.navigate('Home');
     AsyncStorage.getItem('token').then(token => {
       if (token) {
         const {description} = this.state;
@@ -83,6 +112,7 @@ class CreateNewTaskScreen extends Component {
             description: description,
             project_department_id: this.state.project_department_id,
             user_id: this.state.userId,
+            task_type_id: this.state.task_type_id,
           },
         ];
         axios
@@ -92,14 +122,14 @@ class CreateNewTaskScreen extends Component {
             },
           })
           .then(res => {
-            this.props.navigation.navigate({
-              routeName: 'NewTask',
-              params: {
-                task_status: 1,
-                user_id: this.state.userId,
-              },
-            });
-          })
+              this.props.navigation.navigate({
+                routeName:'NewTask', 
+                params: {
+                  task_status: 1,
+                  user_id: this.state.userId,
+                },
+              });
+            })
           .catch(err => {
             const toastOpts = {
               data: 'Success',
@@ -121,6 +151,7 @@ class CreateNewTaskScreen extends Component {
   };
   render() {
     const {dataSource} = this.state;
+    const { typeSource } = this.state;
     return (
       <View style={styles.mainContainer}>
         <ScrollView>
@@ -138,12 +169,27 @@ class CreateNewTaskScreen extends Component {
               baseColor="black"
               labelColor="#fff"
               onChangeText={(value, index, data) => {
-                // alert(JSON.stringify(data[index]['id']));
                 this.setState({
                   project_department_id: JSON.stringify(data[index]['id']),
                 });
               }}
             />
+            <Dropdown
+              label="Select Task Type"
+              data={typeSource}
+              valueExtractor={({id, type_name}) => type_name}
+              value={typeSource.id}
+              selectedItem={({id}) => id}
+              fontSize={16}
+              baseColor="black"
+              labelColor="#fff"
+              onChangeText={(value, index, data) => {
+                this.setState({
+                  task_type_id: JSON.stringify(data[index]['id']),
+                });
+              }}
+            />
+
             <TextInput
               label="Enter The Task Description"
               autoCapitalize="none"

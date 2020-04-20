@@ -26,13 +26,23 @@ class EditTaskScreen extends Component {
       statusId: '',
       taskId: '',
       status: '',
+      tasktypeName: '',
+      noOfHours: '',
+      comments: '',
     };
   }
+  onChangeText = (key, val) => {
+    this.setState({ [key]: val });
+  };
+
   componentDidMount() {
     const project = this.props.navigation.getParam('projectName');
     const taskdescription = this.props.navigation.getParam('description');
     const status = this.props.navigation.getParam('statusId');
     const current_task_id = this.props.navigation.getParam('taskId');
+    const taskType = this.props.navigation.getParam('tasktypeName');
+    const no_of_hours = this.props.navigation.getParam('noOfHours');
+    const comments = this.props.navigation.getParam('comments');
 
     AsyncStorage.getItem('token').then(token => {
       if (token) {
@@ -50,6 +60,9 @@ class EditTaskScreen extends Component {
                   projectName: project,
                   description: taskdescription,
                   taskId: current_task_id,
+                  tasktypeName: taskType,
+                  noOfHours: no_of_hours,
+                  comments: comments,
                   status: 'New Task',
                 });
               })
@@ -84,6 +97,9 @@ class EditTaskScreen extends Component {
                   projectName: project,
                   description: taskdescription,
                   taskId: current_task_id,
+                  tasktypeName: taskType,
+                  noOfHours: no_of_hours,
+                  comments: comments,
                   status: 'Countinued Task',
                 });
               })
@@ -118,6 +134,9 @@ class EditTaskScreen extends Component {
                   projectName: project,
                   description: taskdescription,
                   taskId: current_task_id,
+                  tasktypeName: taskType,
+                  // noOfHours: no_of_hours,
+                  // comments: comments,
                   status: 'Pendig Task',
                 });
               })
@@ -152,6 +171,9 @@ class EditTaskScreen extends Component {
                   projectName: project,
                   description: taskdescription,
                   taskId: current_task_id,
+                  tasktypeName: taskType,
+                  noOfHours: no_of_hours,
+                  comments: comments,
                   status: 'On Hold Task',
                 });
               })
@@ -185,6 +207,9 @@ class EditTaskScreen extends Component {
                   dataSource: [...res.data.success],
                   projectName: project,
                   description: taskdescription,
+                  tasktypeName: taskType,
+                  noOfHours: no_of_hours,
+                  comments: comments,
                   taskId: current_task_id,
                 });
               })
@@ -215,6 +240,8 @@ class EditTaskScreen extends Component {
         const taskDetails = {
           task_id: this.state.taskId,
           status_id: this.state.statusId,
+          no_of_hours: this.state.noOfHours,
+          comments: this.state.comments,
         };
 
         console.log(taskDetails);
@@ -269,11 +296,23 @@ class EditTaskScreen extends Component {
             <Text style={styles.headingTitle}>Edit This Task</Text>
           </View>
           <View style={styles.inputContainer}>
-            {/* <Text style={styles.headingTitleTask}>
-              Task Number is: #{this.state.taskId}
-            </Text> */}
-            <TextInput
+            
+          <TextInput
               value={this.state.projectName}
+              autoCapitalize="none"
+              disabled={true}
+              autoCorrect={false}
+              returnKeyType={'next'}
+              style={styles.emailInput}
+              theme={{
+                colors: {
+                  primary: '#000',
+                  underlineColor: 'transparent',
+                },
+              }}
+            />
+            <TextInput
+              value={this.state.tasktypeName}
               autoCapitalize="none"
               disabled={true}
               autoCorrect={false}
@@ -299,6 +338,35 @@ class EditTaskScreen extends Component {
                   underlineColor: 'transparent',
                 },
               }}
+            />
+            <TextInput
+              placeholder="Enter number of hours"
+              value={this.state.noOfHours}
+              autoCapitalize="none"
+              returnKeyType={'next'}
+              style={styles.emailInput}
+              theme={{
+                colors: {
+                  primary: '#000',
+                  underlineColor: 'transparent',
+                },
+              }}
+              onChangeText={val => this.onChangeText('noOfHours', val)}
+            />
+            <TextInput
+              placeholder="Enter Comment"
+              value={this.state.comments}
+
+              autoCapitalize="none"
+              returnKeyType={'next'}
+              style={styles.emailInput}
+              theme={{
+                colors: {
+                  primary: '#000',
+                  underlineColor: 'transparent',
+                },
+              }}
+              onChangeText={val => this.onChangeText('comments', val)}
             />
 
             <Dropdown

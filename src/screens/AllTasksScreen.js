@@ -105,20 +105,7 @@ class AllTasksScreen extends Component {
               }}
             />
           </View>
-          <View style={styles.addButton}>
-            <TouchableOpacity
-              style={styles.buttonContainer}
-              onPress={() =>
-                this.props.navigation.navigate({
-                  routeName: 'CreateNew',
-                  params: {
-                    user_id: 2,
-                  },
-                })
-              }>
-              <Icon name="plus" size={30} color="#fff" />
-            </TouchableOpacity>
-          </View>
+        
         </ScrollView>
       </AndroidBackHandler>
     );

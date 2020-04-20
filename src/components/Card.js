@@ -1,13 +1,13 @@
 import React from 'react';
-import {View, Text, StyleSheet, TouchableNativeFeedback} from 'react-native';
+import {View, Text, StyleSheet, TouchableOpacity} from 'react-native';
 
 const Card = props => {
   return (
-    <TouchableNativeFeedback onPress={props.onSelect}>
+    <TouchableOpacity onPress={props.onSelect}>
       <View style={{...styles.card, ...props.style}}>
         <Text style={styles.cardTextStyle}> {props.title} </Text>
       </View>
-    </TouchableNativeFeedback>
+    </TouchableOpacity>
   );
 };
 

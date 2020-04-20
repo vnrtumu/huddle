@@ -65,6 +65,8 @@ class PendingTaskScreen extends Component {
               pointer={data.description}
               style={styles.chapterCardtext}
               colorCode="#FF8C00"
+              noOfHours={data.no_of_hours}
+              comments={data.comments}
               onEdit={() => {
                 this.props.navigation.navigate({
                   routeName: 'EditTask',
@@ -73,6 +75,9 @@ class PendingTaskScreen extends Component {
                     description: `${data.description}`,
                     taskId: `${data.task_id}`,
                     statusId: `${data.status_id}`,
+                    tasktypeName: `${data.type_name}`,
+                    noOfHours: `${data.no_of_hours}`,
+                    comments: `${data.comments}`,
                   },
                 });
               }}

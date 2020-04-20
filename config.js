@@ -1,5 +1,3 @@
-// import {API_URL} from 'react-native-dotenv';
-
 export default {
-  API_URL: 'http://dev.api.huddle.aroha.co.in/api',
+  API_URL: 'http://api.huddle.aroha.co.in/api',
 };
