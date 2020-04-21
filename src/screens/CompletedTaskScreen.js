@@ -37,7 +37,7 @@ class CompletedTaskScreen extends Component {
           })
           .catch(err => {
             const toastOpts = {
-              data: 'Success',
+              data: 'Error',
               textColor: '#ffffff',
               backgroundColor: '#444444',
               duration: WToast.duration.LONG, //1.SHORT 2.LONG

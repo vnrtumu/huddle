@@ -46,7 +46,7 @@ class RegisterScreen extends Component {
       .post(`${config.API_URL}/register`, userDetails)
       .then(res => {
         const toastOpts = {
-          data: 'Success',
+          data: 'Success! Go to login',
           textColor: '#ffffff',
           backgroundColor: '#444444',
           duration: WToast.duration.LONG, //1.SHORT 2.LONG
@@ -59,10 +59,11 @@ class RegisterScreen extends Component {
           ),
         };
         WToast.show(toastOpts);
+        this.props.navigation.navigate("Login");
       })
       .catch(err => {
         const toastOpts = {
-          data: 'Success',
+          data: 'Error',
           textColor: '#ffffff',
           backgroundColor: '#444444',
           duration: WToast.duration.LONG, //1.SHORT 2.LONG
